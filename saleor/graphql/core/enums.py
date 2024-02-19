@@ -31,6 +31,7 @@ from ...site import error_codes as site_error_codes
 from ...thumbnail import IconThumbnailFormat, ThumbnailFormat
 from ...translations import error_codes as translatable_error_codes
 from ...warehouse import error_codes as warehouse_error_codes
+from ...vendor import error_codes as vendor_error_codes
 from ...webhook import error_codes as webhook_error_codes
 from ..notifications import error_codes as external_notifications_error_codes
 from .doc_category import (
@@ -363,6 +364,9 @@ UploadErrorCode = graphene.Enum.from_enum(core_error_codes.UploadErrorCode)
 
 WarehouseErrorCode = graphene.Enum.from_enum(warehouse_error_codes.WarehouseErrorCode)
 WarehouseErrorCode.doc_category = DOC_CATEGORY_PRODUCTS
+
+VendorErrorCode = graphene.Enum.from_enum(vendor_error_codes.VendorErrorCode)
+VendorErrorCode.doc_category = DOC_CATEGORY_PRODUCTS
 
 TranslationErrorCode = graphene.Enum.from_enum(core_error_codes.TranslationErrorCode)
 

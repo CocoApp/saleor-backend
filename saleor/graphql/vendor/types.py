@@ -1,6 +1,6 @@
 import graphene
 from ...vendor import models
-from ..core.types import ModelObjectType
+from ..core.types import ModelObjectType, BaseInputObjectType
 
 
 class Vendor(ModelObjectType[models.Vendor]):
@@ -25,3 +25,15 @@ class Vendor(ModelObjectType[models.Vendor]):
 
     class Meta:
         model = models.Vendor
+
+
+class VendorCreateInput(BaseInputObjectType):
+    name = graphene.String(description="Vendor name.", required=True)
+    description = graphene.String(
+        required=True, description="The description of the vendor."
+    )
+    phone_number = graphene.String(
+        required=True, description="The phone_number of the vendor."
+    )
+    address = graphene.String(required=True, description="The address of the vendor.")
+    website = graphene.String(required=True, description="The website of the vendor.")

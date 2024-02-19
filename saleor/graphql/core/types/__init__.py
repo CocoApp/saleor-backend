@@ -72,6 +72,7 @@ from .common import (
     WebhookError,
     WebhookTriggerError,
     Weight,
+    VendorError,
 )
 from .event import SubscriptionObjectType
 from .filter_input import (
@@ -181,4 +182,5 @@ __all__ = [
     "DateTimeFilterInput",
     "IconThumbnailField",
     "VoucherCodeBulkDeleteError",
+    "VendorError",
 ]

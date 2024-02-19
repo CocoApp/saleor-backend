@@ -98,6 +98,7 @@ from ..enums import (
     WebhookErrorCode,
     WebhookTriggerErrorCode,
     WeightUnitsEnum,
+    VendorErrorCode,
 )
 from ..scalars import Date, PositiveDecimal
 from ..tracing import traced_resolver
@@ -789,6 +790,13 @@ class WarehouseError(Error):
         description="List of shipping zones IDs which causes the error.",
         required=False,
     )
+
+    class Meta:
+        doc_category = DOC_CATEGORY_PRODUCTS
+
+
+class VendorError(Error):
+    code = VendorErrorCode(description="The error code.", required=True)
 
     class Meta:
         doc_category = DOC_CATEGORY_PRODUCTS

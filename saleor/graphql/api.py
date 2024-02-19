@@ -48,7 +48,7 @@ from .warehouse.schema import (
 )
 from .webhook.schema import WebhookMutations, WebhookQueries
 from .webhook.subscription_types import WEBHOOK_TYPES_MAP, Subscription
-from .vendor.schema import VendorQueries
+from .vendor.schema import VendorQueries, VendorMutations
 
 API_PATH = SimpleLazyObject(lambda: reverse("api"))
 
@@ -106,6 +106,7 @@ class Mutation(
     TaxMutations,
     WarehouseMutations,
     WebhookMutations,
+    VendorMutations,
 ):
     pass
 
