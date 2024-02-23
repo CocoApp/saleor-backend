@@ -11,6 +11,7 @@ class Vendor(ModelWithMetadata):
         related_name="vendors",
         on_delete=models.SET_NULL,
         null=True,
+        blank=True,
     )
     phone_number = models.CharField(max_length=20, blank=True)
     address = models.CharField(max_length=255, blank=True)

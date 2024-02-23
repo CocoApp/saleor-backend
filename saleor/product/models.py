@@ -44,6 +44,7 @@ from ..permission.enums import (
 from ..seo.models import SeoModel, SeoModelTranslation
 from ..tax.models import TaxClass
 from . import ProductMediaTypes, ProductTypeKind, managers
+from ..vendor.models import Vendor
 
 ALL_PRODUCTS_PERMISSIONS = [
     # List of permissions, where each of them allows viewing all products
@@ -176,6 +177,13 @@ class Product(SeoModel, ModelWithMetadata, ModelWithExternalReference):
     search_document = models.TextField(blank=True, default="")
     search_vector = SearchVectorField(blank=True, null=True)
     search_index_dirty = models.BooleanField(default=False, db_index=True)
+    vendor = models.ForeignKey(
+        Vendor,
+        null=True,
+        blank=True,
+        related_name="products",
+        on_delete=models.DO_NOTHING,
+    )
 
     category = models.ForeignKey(
         Category,

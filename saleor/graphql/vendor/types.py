@@ -9,7 +9,10 @@ class Vendor(ModelObjectType[models.Vendor]):
     description = graphene.String(
         required=True, description="The description of the vendor."
     )
-    owner = graphene.String(required=True, description="The owner of the vendor.")
+    owner = graphene.Field(
+        "saleor.graphql.account.types.User",
+        description=("User who performed the action. Requires one of the following "),
+    )
     phone_number = graphene.String(
         required=True, description="The phone_number of the vendor."
     )
@@ -32,6 +35,7 @@ class VendorCreateInput(BaseInputObjectType):
     description = graphene.String(
         required=True, description="The description of the vendor."
     )
+    owner_id = graphene.Int(required=True, description="Owner of the vendor.")
     phone_number = graphene.String(
         required=True, description="The phone_number of the vendor."
     )

@@ -13,6 +13,7 @@ from ..core.tracing import traced_resolver
 from ..core.utils import from_global_id_or_error
 from ..utils import get_user_or_app_from_context
 from ..utils.filters import filter_by_period
+from ...vendor.models import Vendor
 
 
 def resolve_categories(info: ResolveInfo, level=None):
@@ -83,7 +84,7 @@ def resolve_product(
 
 @traced_resolver
 def resolve_products(
-    info: ResolveInfo, requestor, channel_slug=None
+    info: ResolveInfo, requestor, channel_slug=None, vendor_id=None
 ) -> ChannelQsContext:
     connection_name = get_database_connection_name(info.context)
     qs = models.Product.objects.using(connection_name).visible_to_user(
@@ -103,6 +104,10 @@ def resolve_products(
             qs = qs.filter(
                 Exists(product_channel_listings.filter(product_id=OuterRef("pk")))
             )
+            if vendor := (
+                Vendor.objects.using(connection_name).filter(id=vendor_id).first()
+            ):
+                qs = qs.filter(vendor=vendor)
         else:
             qs = models.Product.objects.none()
     return ChannelQsContext(qs=qs, channel_slug=channel_slug)

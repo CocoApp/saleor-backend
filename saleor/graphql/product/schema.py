@@ -254,6 +254,9 @@ class ProductQueries(graphene.ObjectType):
         channel=graphene.String(
             description="Slug of a channel for which the data should be returned."
         ),
+        vendor_id=graphene.Int(
+            description="Id of a vendor for which the data should be returned."
+        ),
         description=(
             "List of the shop's products. Requires one of the following permissions to "
             "include the unpublished items: "
@@ -444,7 +447,9 @@ class ProductQueries(graphene.ObjectType):
 
     @staticmethod
     @traced_resolver
-    def resolve_products(_root, info: ResolveInfo, *, channel=None, **kwargs):
+    def resolve_products(
+        _root, info: ResolveInfo, *, channel=None, vendor_id=None, **kwargs
+    ):
         check_for_sorting_by_rank(info, kwargs)
         search = kwargs.get("search")
 
@@ -454,7 +459,9 @@ class ProductQueries(graphene.ObjectType):
         )
         if channel is None and not has_required_permissions:
             channel = get_default_channel_slug_or_graphql_error()
-        qs = resolve_products(info, requestor, channel_slug=channel)
+        qs = resolve_products(
+            info, requestor, channel_slug=channel, vendor_id=vendor_id
+        )
         if search:
             qs = ChannelQsContext(
                 qs=search_products(qs.qs, search), channel_slug=channel
